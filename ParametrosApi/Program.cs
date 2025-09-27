@@ -1,13 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using ParametrosApi.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// EF Core
+builder.Services.AddDbContext<ParametrosDbContext>(opt =>
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Controllers (MVC)
 builder.Services.AddControllers();
 
-// CORS (ajuste em produção)
+// CORS (ajuste em produção)cl
 builder.Services.AddCors(p => p.AddDefaultPolicy(b =>
     b.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
